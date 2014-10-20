@@ -22,22 +22,29 @@
  * THE SOFTWARE.
  */
 
-package Main;
+package GUI;
 
+import Main.AffineTransformation;
+import Main.Triangle;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.io.PrintStream;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
  * @author Aleksandr Šmailov
  */
-public class DrawPanel extends JPanel{
+public class DrawPanel extends JPanel implements Runnable{
+    
     private final static PrintStream out = System.out;
     private int x0, y0, width, height;
+    private static Thread animator;
     
     /**
      * DrawPanel constructor.
@@ -53,6 +60,10 @@ public class DrawPanel extends JPanel{
         this.height = this.getHeight();
         this.x0 = this.getWidth()/8;
         this.y0 = this.getHeight() - this.getHeight()/8;
+        if (animator == null) {
+            animator = new Thread(this, "AffineTransformation animation");
+            animator.start();
+        }
     }
     
     /**
@@ -111,18 +122,29 @@ public class DrawPanel extends JPanel{
         this.y0 = this.getHeight() - this.getHeight()/8;
         // Draw axes
         drawAxes(g2d);
-//        Triangle t = new Triangle(10,0,100,20,50,100);
-        Triangle t = new Triangle(0,1,0,0,1,0);
+        Triangle t = new Triangle(10,0,100,20,50,100);
+        Triangle tmp = new Triangle(10,0,100,20,50,100);
         out.println(t.toString());
-        AffineTransformation f = new AffineTransformation(-7, -4, -4, -3, 8, 7);
+        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
         f.transform(t);
         out.println(t.toString());
-        
+        out.println("________________");
         drawTriangle(g2d,t);
     }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         doDrawing(g);
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            try {
+                animator.sleep(2000);
+            } catch (InterruptedException ex) {
+                out.println(ex);
+            }
+        }
     }
 }
