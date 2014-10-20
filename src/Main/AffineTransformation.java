@@ -25,6 +25,7 @@
 package Main;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * @author Aleksandr Šmailov
@@ -75,5 +76,37 @@ public class AffineTransformation {
             y = (int)(p.x * c + p.y * d + f);
             t.setPoint(i, x, y);
         }
+    }
+    
+    /**
+     * Returns ArrayList of triangles which represent every step of
+     * transformation.
+     * @param t Triangle.
+     * @param frames how many steps is required.
+     * @return ArrayList of Triangle.
+     */
+    public ArrayList<Triangle> getTransformationSteps(Triangle t, int frames){
+        ArrayList<Triangle> triangles = new ArrayList();
+        if(t != null){
+            Triangle oldt = t.getCopy();
+            transform(t);
+            Point[] p1;
+            Point[] p2;
+            Point[] p = new Point[t.getPoints().length];
+            int x,y;
+            for (int i = 1; i <= frames; i++){
+                p1 = oldt.getPoints();
+                p2 = t.getPoints();
+                for (int j = 0; j < p1.length; j++){
+                    x = p1[j].x + 
+                        Math.round((p2[j].x - p1[j].x) / (float)frames * i);
+                    y = p1[j].y + 
+                        Math.round((p2[j].y - p1[j].y) / (float)frames * i);
+                    p[j] = new Point(x,y);
+                }
+                triangles.add(new Triangle(p[0],p[1],p[2]));
+            }
+        }
+        return triangles;
     }
 }

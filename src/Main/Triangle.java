@@ -66,6 +66,7 @@ public class Triangle {
      * @param c third point.
      */
     public Triangle(Point a, Point b, Point c){
+        init();
         points[0] = a;
         points[1] = b;
         points[2] = c;
@@ -130,5 +131,10 @@ public class Triangle {
                  System.lineSeparator();
         }
         return s;
+    }
+    
+    public Triangle getCopy(){
+        return new Triangle(new Point(points[0]), new Point(points[1]), 
+                            new Point(points[2]));
     }
 }

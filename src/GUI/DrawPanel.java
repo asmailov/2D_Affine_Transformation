@@ -124,11 +124,12 @@ public class DrawPanel extends JPanel implements Runnable{
         drawAxes(g2d);
         Triangle t = new Triangle(10,0,100,20,50,100);
         Triangle tmp = new Triangle(10,0,100,20,50,100);
-        out.println(t.toString());
+//        out.println(t.toString());
         AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
-        f.transform(t);
-        out.println(t.toString());
-        out.println("________________");
+        f.getTransformationSteps(t,10);
+        //f.transform(t);
+//        out.println(t.toString());
+//        out.println("________________");
         drawTriangle(g2d,t);
     }
     @Override
