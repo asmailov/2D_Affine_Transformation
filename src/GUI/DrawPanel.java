@@ -32,9 +32,7 @@ import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.io.PrintStream;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -45,6 +43,10 @@ public class DrawPanel extends JPanel implements Runnable{
     private final static PrintStream out = System.out;
     private int x0, y0, width, height;
     private static Thread animator;
+    private int stepCount;
+    private int stepAmount;
+    private ArrayList<Triangle> steps;
+    private Triangle triangle;
     
     /**
      * DrawPanel constructor.
@@ -56,10 +58,12 @@ public class DrawPanel extends JPanel implements Runnable{
      * Initialize variables.
      */
     private void init(){
+        stepCount = 0;
         this.width = this.getWidth();
         this.height = this.getHeight();
         this.x0 = this.getWidth()/8;
         this.y0 = this.getHeight() - this.getHeight()/8;
+        calculate();
         if (animator == null) {
             animator = new Thread(this, "AffineTransformation animation");
             animator.start();
@@ -126,12 +130,21 @@ public class DrawPanel extends JPanel implements Runnable{
         Triangle tmp = new Triangle(10,0,100,20,50,100);
 //        out.println(t.toString());
         AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
-        f.getTransformationSteps(t,10);
+        steps = f.getTransformationSteps(t,10);
+        stepAmount = 10;
         //f.transform(t);
 //        out.println(t.toString());
 //        out.println("________________");
-        drawTriangle(g2d,t);
+        drawTriangle(g2d,triangle);
     }
+    
+    public void calculate(){
+        Triangle t = new Triangle(10,0,100,20,50,100);
+        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
+        steps = f.getTransformationSteps(t,10);
+        stepAmount = 10;
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -141,8 +154,15 @@ public class DrawPanel extends JPanel implements Runnable{
     @Override
     public void run() {
         while(true){
+            repaint();
             try {
-                animator.sleep(2000);
+                if(stepCount < stepAmount){
+                    triangle = steps.get(stepCount);
+                    stepCount++;
+                } else {
+                    stepCount = 0;
+                }
+                animator.sleep(250);
             } catch (InterruptedException ex) {
                 out.println(ex);
             }
