@@ -120,4 +120,15 @@ public class Triangle {
         }
         return y;
     }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < points.length; i++){
+            s += "Point" + i + ": " + "(" + 
+                 points[i].x + "," + points[i].y + ")" + 
+                 System.lineSeparator();
+        }
+        return s;
+    }
 }

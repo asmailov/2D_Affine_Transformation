@@ -111,7 +111,14 @@ public class DrawPanel extends JPanel{
         this.y0 = this.getHeight() - this.getHeight()/8;
         // Draw axes
         drawAxes(g2d);
-        drawTriangle(g2d,new Triangle(10,0,100,20,50,100));
+//        Triangle t = new Triangle(10,0,100,20,50,100);
+        Triangle t = new Triangle(0,1,0,0,1,0);
+        out.println(t.toString());
+        AffineTransformation f = new AffineTransformation(-7, -4, -4, -3, 8, 7);
+        f.transform(t);
+        out.println(t.toString());
+        
+        drawTriangle(g2d,t);
     }
     @Override
     public void paintComponent(Graphics g) {

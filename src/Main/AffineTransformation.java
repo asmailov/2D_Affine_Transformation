@@ -53,6 +53,13 @@ public class AffineTransformation {
     }
     
     public void transform(Triangle t){
-        //Point[] p = t.getPoints();
+        int x, y;
+        Point p;
+        for(int i = 0; i < 3; i++){
+            p = t.getPoint(i);
+            x = p.x * a + p.y * b + e;
+            y = p.x * c + p.y * d + f;
+            t.setPoint(i, x, y);
+        }
     }
 }
