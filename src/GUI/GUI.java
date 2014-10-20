@@ -23,6 +23,8 @@
  */
 package GUI;
 
+import Main.Triangle;
+import static Main.AffineTransformation.transform;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
 
@@ -31,10 +33,12 @@ import javax.swing.text.NumberFormatter;
  * @author Aleksandr Šmailov
  */
 public class GUI extends javax.swing.JFrame {
+    private Triangle triangle;
     /**
      * Creates new form GUI
      */
     public GUI() {
+        triangle = new Triangle();
         initComponents();
     }
 
@@ -207,6 +211,11 @@ public class GUI extends javax.swing.JFrame {
         jLabel13.setText("Steps");
 
         jButton2.setText("Transform");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Animate");
 
@@ -393,6 +402,35 @@ public class GUI extends javax.swing.JFrame {
     private void jFormattedTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField13ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try{
+            int x,y;
+            x = Integer.parseInt(this.jFormattedTextField1.getText());
+            y = Integer.parseInt(this.jFormattedTextField2.getText());
+            triangle.setPoint(0, x, y);
+            x = Integer.parseInt(this.jFormattedTextField3.getText());
+            y = Integer.parseInt(this.jFormattedTextField4.getText());
+            triangle.setPoint(1, x, y);
+            x = Integer.parseInt(this.jFormattedTextField5.getText());
+            y = Integer.parseInt(this.jFormattedTextField6.getText());
+            triangle.setPoint(2, x, y);
+            float a,b,c,d,e,f;
+            a = Float.parseFloat(this.jFormattedTextField7.getText());
+            b = Float.parseFloat(this.jFormattedTextField8.getText());
+            c = Float.parseFloat(this.jFormattedTextField9.getText());
+            d = Float.parseFloat(this.jFormattedTextField10.getText());
+            e = Float.parseFloat(this.jFormattedTextField11.getText());
+            f = Float.parseFloat(this.jFormattedTextField12.getText());
+            System.out.println(triangle.toString());
+            transform(triangle);
+            System.out.println(triangle.toString());
+        } catch(Exception e){
+        }
+//        if(!s.isEmpty()){
+//            int i = Integer.parseInt(s);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

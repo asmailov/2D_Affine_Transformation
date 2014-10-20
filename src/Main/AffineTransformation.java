@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * @author Aleksandr Šmailov
  */
 public class AffineTransformation {
-    private float a, b, c, d, e, f;
+    private static float a, b, c, d, e, f;
     
     public AffineTransformation(int a, int b, int c,
                                 int d, int e, int f){
@@ -67,7 +67,7 @@ public class AffineTransformation {
      * Transforms triangle using AffineTransformation.
      * @param t Triangle
      */
-    public void transform(Triangle t){
+    public static void transform(Triangle t){
         int x, y;
         Point p;
         for(int i = 0; i < 3; i++){
