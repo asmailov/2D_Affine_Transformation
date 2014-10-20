@@ -2,4 +2,4 @@
 /nbproject
 build.xml
 manifest.mf
-*.form
+src/GUI/GUI.form

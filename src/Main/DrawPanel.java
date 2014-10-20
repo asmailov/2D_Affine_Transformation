@@ -26,6 +26,7 @@ package Main;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.io.PrintStream;
@@ -36,43 +37,75 @@ import javax.swing.JPanel;
  */
 public class DrawPanel extends JPanel{
     private final static PrintStream out = System.out;
-    private int x, y, width, height;
+    private int x0, y0, width, height;
     
+    /**
+     * DrawPanel constructor.
+     */
     public DrawPanel(){
         init();
     }
+    /**
+     * Initialize variables.
+     */
     private void init(){
         this.width = this.getWidth();
         this.height = this.getHeight();
-        this.x = this.getWidth()/8;
-        this.y = this.getHeight() - this.getHeight()/8;
+        this.x0 = this.getWidth()/8;
+        this.y0 = this.getHeight() - this.getHeight()/8;
     }
+    
     /**
      * Method draws X and Y axes on the JPanel.
      * @param g Graphics2D
      */
     private void drawAxes(Graphics2D g){
-        g.drawLine(0, y, width, y);
-        g.drawLine(x, 0, x, height);
+        // Draw axes.
+        g.drawLine(0, y0, width, y0);
+        g.drawLine(x0, 0, x0, height);
         // Diameter of Axes centre.
         int diameter;
         // Should be set to odd number, otherwise it will position not in the
-        // center
-        diameter = 9;
+        // center.
+        diameter = 5;
         Ellipse2D.Double circle;
-        circle = new Ellipse2D.Double(x-diameter/2, y-diameter/2, 
+        circle = new Ellipse2D.Double(x0-diameter/2, y0-diameter/2, 
                                       diameter, diameter);
         g.fill(circle);
-        
     }
     
+    private void drawTriangle(Graphics2D g, 
+                              int x1, int y1,
+                              int x2, int y2,
+                              int x3, int y3){
+        // n is 3 because triangle has 3 vertices.
+        int n = 3;
+        int x[] = new int[3];
+        int y[] = new int[3];
+        // Coordinates are shifted because we have a different starting point.
+        x[0]=x1+x0; x[1]=x2+x0; x[2]=x3+x0;
+        y[0]=y0-y1; y[1]=y0-y2; y[2]=y0-y3;
+        
+        Polygon p = new Polygon(x, y, n);
+        g.fillPolygon(p);
+    }
+    /**
+     * Execute drawing.
+     * @param g Graphics
+     */
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         // Enable antialias
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                              RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        this.width = this.getWidth();
+        this.height = this.getHeight();
+        this.x0 = this.getWidth()/8;
+        this.y0 = this.getHeight() - this.getHeight()/8;
         // Draw axes
         drawAxes(g2d);
+        drawTriangle(g2d,10,0,100,20,50,100);
     }
     @Override
     public void paintComponent(Graphics g) {
