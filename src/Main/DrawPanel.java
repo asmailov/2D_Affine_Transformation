@@ -73,7 +73,11 @@ public class DrawPanel extends JPanel{
                                       diameter, diameter);
         g.fill(circle);
     }
-    
+    /**
+     * Draws triangle.
+     * @param g Graphics2D
+     * @param t Triangle
+     */
     private void drawTriangle(Graphics2D g, Triangle t){
         // n is 3 because triangle has 3 vertices.
         int n = 3;
@@ -88,9 +92,6 @@ public class DrawPanel extends JPanel{
         for(i = 0; i < y.length; i++){
             y[i] = y0 - y[i];
         }
-//        x[0]=p[0].x+x0; x[1]=x2+x0; x[2]=x3+x0;
-//        y[0]=y0-y1; y[1]=y0-y2; y[2]=y0-y3;
-        
         Polygon p = new Polygon(x, y, n);
         g.fillPolygon(p);
     }

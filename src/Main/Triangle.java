@@ -84,10 +84,18 @@ public class Triangle {
         return point;
     }
     
+    /**
+     * Returns point array.
+     * @return Point array.
+     */
     public Point[] getPoints(){
         return points;
     }
     
+    /**
+     * Returns x array.
+     * @return x array
+     */
     public int[] getXArray(){
         int[] x = new int[3];
         for (int i = 0; i < points.length; i++){
@@ -96,6 +104,10 @@ public class Triangle {
         return x;
     }
     
+    /**
+     * Returns y array.
+     * @return y array
+     */
     public int[] getYArray(){
         int[] y = new int[3];
         for (int i = 0; i < points.length; i++){
