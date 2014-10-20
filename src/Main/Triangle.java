@@ -38,6 +38,9 @@ public class Triangle {
     
     private void init(){
         points = new Point[3];
+        for(int i = 0; i < points.length; i++) {
+            points[i] = new Point();
+        }
     }
     
     /**
@@ -50,9 +53,22 @@ public class Triangle {
      * @param y3 3 point y coordinate
      */
     public Triangle(int x1, int y1, int x2, int y2, int x3, int y3){
+        init();
         points[0].setLocation(x1, y1);
         points[1].setLocation(x2, y2);
         points[2].setLocation(x3, y3);
+    }
+    
+    /**
+     * Triangle constructor which sets points.
+     * @param a first point.
+     * @param b second point.
+     * @param c third point.
+     */
+    public Triangle(Point a, Point b, Point c){
+        points[0] = a;
+        points[1] = b;
+        points[2] = c;
     }
     
     /**
@@ -66,5 +82,25 @@ public class Triangle {
             point = points[i];
         }
         return point;
+    }
+    
+    public Point[] getPoints(){
+        return points;
+    }
+    
+    public int[] getXArray(){
+        int[] x = new int[3];
+        for (int i = 0; i < points.length; i++){
+            x[i] = points[i].x;
+        }
+        return x;
+    }
+    
+    public int[] getYArray(){
+        int[] y = new int[3];
+        for (int i = 0; i < points.length; i++){
+            y[i] = points[i].y;
+        }
+        return y;
     }
 }

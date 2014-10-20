@@ -74,17 +74,22 @@ public class DrawPanel extends JPanel{
         g.fill(circle);
     }
     
-    private void drawTriangle(Graphics2D g, 
-                              int x1, int y1,
-                              int x2, int y2,
-                              int x3, int y3){
+    private void drawTriangle(Graphics2D g, Triangle t){
         // n is 3 because triangle has 3 vertices.
         int n = 3;
-        int x[] = new int[3];
-        int y[] = new int[3];
+        
+        int x[] = t.getXArray();
+        int y[] = t.getYArray();
+        int i;
         // Coordinates are shifted because we have a different starting point.
-        x[0]=x1+x0; x[1]=x2+x0; x[2]=x3+x0;
-        y[0]=y0-y1; y[1]=y0-y2; y[2]=y0-y3;
+        for(i = 0; i < x.length; i++){
+            x[i] += x0;
+        }
+        for(i = 0; i < y.length; i++){
+            y[i] = y0 - y[i];
+        }
+//        x[0]=p[0].x+x0; x[1]=x2+x0; x[2]=x3+x0;
+//        y[0]=y0-y1; y[1]=y0-y2; y[2]=y0-y3;
         
         Polygon p = new Polygon(x, y, n);
         g.fillPolygon(p);
@@ -105,7 +110,7 @@ public class DrawPanel extends JPanel{
         this.y0 = this.getHeight() - this.getHeight()/8;
         // Draw axes
         drawAxes(g2d);
-        drawTriangle(g2d,10,0,100,20,50,100);
+        drawTriangle(g2d,new Triangle(10,0,100,20,50,100));
     }
     @Override
     public void paintComponent(Graphics g) {
