@@ -36,12 +36,14 @@ import javax.swing.JPanel;
  */
 public class DrawPanel extends JPanel{
     private final static PrintStream out = System.out;
-    private int x,y;
+    private int x, y, width, height;
     
     public DrawPanel(){
         init();
     }
     private void init(){
+        this.width = this.getWidth();
+        this.height = this.getHeight();
         this.x = this.getWidth()/8;
         this.y = this.getHeight() - this.getHeight()/8;
     }
@@ -50,11 +52,6 @@ public class DrawPanel extends JPanel{
      * @param g Graphics2D
      */
     private void drawAxes(Graphics2D g){
-        int x,y,width,height;
-        width = this.getWidth();
-        height = this.getHeight();
-        x = width/8;
-        y = height - height/8;
         g.drawLine(0, y, width, y);
         g.drawLine(x, 0, x, height);
         // Diameter of Axes centre.

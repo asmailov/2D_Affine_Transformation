@@ -35,7 +35,8 @@ public class Main {
     public Main(){
         // Create window and set it visible.
         gui = new GUI();
-        GUI.main(null);
+        gui.setVisible(true);
+        //GUI.main(null);
     }
     /**
      * @param args the command line arguments
