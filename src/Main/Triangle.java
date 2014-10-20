@@ -38,6 +38,7 @@ public class Triangle {
     
     private void init(){
         points = new Point[3];
+        // Creating 3 new points.
         for(int i = 0; i < points.length; i++) {
             points[i] = new Point();
         }
@@ -72,6 +73,12 @@ public class Triangle {
         points[2] = c;
     }
     
+    /**
+     * Set specific point.
+     * @param i number of point.
+     * @param x X coordinate.
+     * @param y Y coordinate.
+     */
     public void setPoint(int i, int x, int y){
         if(i < points.length){
             points[i].setLocation(x,y);
@@ -122,6 +129,10 @@ public class Triangle {
         return y;
     }
 
+    /**
+     * Formats and returns a String.
+     * @return formatted String.
+     */
     @Override
     public String toString() {
         String s = "";
@@ -133,6 +144,10 @@ public class Triangle {
         return s;
     }
     
+    /**
+     * Copies this object and returns it.
+     * @return copy of this.Triangle.
+     */
     public Triangle getCopy(){
         return new Triangle(new Point(points[0]), new Point(points[1]), 
                             new Point(points[2]));

@@ -64,6 +64,7 @@ public class DrawPanel extends JPanel implements Runnable{
         this.x0 = this.getWidth()/8;
         this.y0 = this.getHeight() - this.getHeight()/8;
         calculate();
+        // Creating and starting new Thread so we can do animation.
         if (animator == null) {
             animator = new Thread(this, "AffineTransformation animation");
             animator.start();
@@ -138,6 +139,9 @@ public class DrawPanel extends JPanel implements Runnable{
         drawTriangle(g2d,triangle);
     }
     
+    /**
+     * REMOVE THIS
+     */
     public void calculate(){
         Triangle t = new Triangle(10,0,100,20,50,100);
         AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
@@ -145,12 +149,18 @@ public class DrawPanel extends JPanel implements Runnable{
         stepAmount = 10;
     }
     
+    /**
+     * Overriding this so we can draw our own Graphic.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         doDrawing(g);
     }
-
+    
+    /**
+     * Run method.
+     */
     @Override
     public void run() {
         while(true){
@@ -162,7 +172,7 @@ public class DrawPanel extends JPanel implements Runnable{
                 } else {
                     stepCount = 0;
                 }
-                animator.sleep(250);
+                Thread.sleep(250);
             } catch (InterruptedException ex) {
                 out.println(ex);
             }
