@@ -26,26 +26,60 @@ package Main;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Ellipse2D;
+import java.io.PrintStream;
 import javax.swing.JPanel;
 
 /**
  * @author Aleksandr Šmailov
  */
-public class DrawPanel extends JPanel implements Runnable{
+public class DrawPanel extends JPanel{
+    private final static PrintStream out = System.out;
+    private int x,y;
     
     public DrawPanel(){
+        init();
+    }
+    private void init(){
+        this.x = this.getWidth()/8;
+        this.y = this.getHeight() - this.getHeight()/8;
+    }
+    /**
+     * Method draws X and Y axes on the JPanel.
+     * @param g Graphics2D
+     */
+    private void drawAxes(Graphics2D g){
+        int x,y,width,height;
+        width = this.getWidth();
+        height = this.getHeight();
+        x = width/8;
+        y = height - height/8;
+        g.drawLine(0, y, width, y);
+        g.drawLine(x, 0, x, height);
+        // Diameter of Axes centre.
+        int diameter;
+        // Should be set to odd number, otherwise it will position not in the
+        // center
+        diameter = 9;
+        Ellipse2D.Double circle;
+        circle = new Ellipse2D.Double(x-diameter/2, y-diameter/2, 
+                                      diameter, diameter);
+        g.fill(circle);
         
     }
+    
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
-        g2d.drawLine(0, 0, 50, 50);
+        // Enable antialias
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        // Draw axes
+        drawAxes(g2d);
     }
     @Override
-    public void paintComponent(java.awt.Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         doDrawing(g);
-    }
-    @Override
-    public void run() {
     }
 }
