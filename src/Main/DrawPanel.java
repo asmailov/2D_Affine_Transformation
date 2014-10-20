@@ -24,24 +24,28 @@
 
 package Main;
 
-import GUI.GUI;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JPanel;
 
 /**
  * @author Aleksandr Šmailov
  */
-public class Main {
-    private static GUI gui;
+public class DrawPanel extends JPanel implements Runnable{
     
-    public Main(){
-        // Create window and set it visible.
-        gui = new GUI();
-        GUI.main(null);
+    public DrawPanel(){
+        
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args){
-        // Create new Main class.
-        new Main();
+    private void doDrawing(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.drawLine(0, 0, 50, 50);
+    }
+    @Override
+    public void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
+        doDrawing(g);
+    }
+    @Override
+    public void run() {
     }
 }
