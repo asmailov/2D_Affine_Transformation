@@ -71,6 +71,11 @@ public class Triangle {
         points[2] = c;
     }
     
+    public void setPoint(int i, int x, int y){
+        if(i < points.length){
+            points[i].setLocation(x,y);
+        }
+    }
     /**
      * Returns requested point.
      * @param i number of the point.
