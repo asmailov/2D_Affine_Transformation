@@ -44,6 +44,8 @@ public class DrawPanel extends JPanel implements Runnable{
     
     private int x0, y0, width, height;
     public Triangle triangle;
+    public Triangle transfTriangle;
+    public AffineTransformation transf;
     public ArrayList<Triangle> steps;
     
     private static Thread animator;
@@ -51,6 +53,7 @@ public class DrawPanel extends JPanel implements Runnable{
     private int stepAmount;
     private boolean animation;
     private boolean transformation;
+    private boolean drawTriangle;
     
     /**
      * DrawPanel constructor.
@@ -62,6 +65,9 @@ public class DrawPanel extends JPanel implements Runnable{
      * Initialize variables.
      */
     private void init(){
+        triangle = new Triangle();
+        transfTriangle = new Triangle();
+        transf = new AffineTransformation();
         animation = false;
         stepCount = 0;
         this.width = this.getWidth();
@@ -81,6 +87,8 @@ public class DrawPanel extends JPanel implements Runnable{
      */
     public void enableTransformationDrawing(){
         this.transformation = true;
+        this.animation = false;
+        this.drawTriangle = false;
     }
     
     /**
@@ -88,6 +96,17 @@ public class DrawPanel extends JPanel implements Runnable{
      */
     public void enableAnimationDrawing(){
         this.animation = true;
+        this.transformation = false;
+        this.drawTriangle = false;
+    }
+    
+    /**
+     * Make panel draw starting triangle.
+     */
+    public void enableTriangleDrawing(){
+        this.drawTriangle = true;
+        this.animation = false;
+        this.transformation = false;
     }
     
     /**
@@ -151,8 +170,11 @@ public class DrawPanel extends JPanel implements Runnable{
 //        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
 //        steps = f.getTransformationSteps(t,10);
 //        stepAmount = 10;
-        
-        //drawTriangle(g2d,triangle);
+        if(drawTriangle || animation){
+            drawTriangle(g2d,triangle);
+        } else if(transformation){
+            drawTriangle(g2d,transfTriangle);
+        }
     }
     
     /**

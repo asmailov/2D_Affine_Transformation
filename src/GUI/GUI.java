@@ -33,17 +33,16 @@ import javax.swing.text.NumberFormatter;
  * @author Aleksandr Šmailov
  */
 public class GUI extends javax.swing.JFrame {
-    private Triangle triangle;
-    private Triangle transfTriangle;
-    private AffineTransformation transf;
+//    private Triangle triangle;
+//    private Triangle transfTriangle;
+//    private AffineTransformation transf;
+    private DrawPanel myPanel;
     /**
      * Creates new form GUI
      */
     public GUI() {
-        triangle = new Triangle();
-        transfTriangle = new Triangle();
-        transf = new AffineTransformation();
         initComponents();
+        myPanel = (DrawPanel)jPanel1;
     }
 
     /**
@@ -344,16 +343,17 @@ public class GUI extends javax.swing.JFrame {
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
-            triangle.setPoint(0, x, y);
-            transfTriangle.setPoint(0, x, y);
+            myPanel.triangle.setPoint(0, x, y);
+            myPanel.transfTriangle.setPoint(0, x, y);
             x = Integer.parseInt(this.jFormattedTextField3.getText());
             y = Integer.parseInt(this.jFormattedTextField4.getText());
-            triangle.setPoint(1, x, y);
-            transfTriangle.setPoint(1, x, y);
+            myPanel.triangle.setPoint(1, x, y);
+            myPanel.transfTriangle.setPoint(1, x, y);
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
-            triangle.setPoint(2, x, y);
-            transfTriangle.setPoint(2, x, y);
+            myPanel.triangle.setPoint(2, x, y);
+            myPanel.transfTriangle.setPoint(2, x, y);
+            
             float a,b,c,d,e,f;
             a = Float.parseFloat(this.jFormattedTextField7.getText());
             b = Float.parseFloat(this.jFormattedTextField8.getText());
@@ -361,11 +361,10 @@ public class GUI extends javax.swing.JFrame {
             d = Float.parseFloat(this.jFormattedTextField10.getText());
             e = Float.parseFloat(this.jFormattedTextField11.getText());
             f = Float.parseFloat(this.jFormattedTextField12.getText());
-            transf.setCoefficient(a, b, c, d, e, f);
-            System.out.println(triangle.toString());
-            transf.transform(transfTriangle);
+            myPanel.transf.setCoefficient(a, b, c, d, e, f);
             
-            System.out.println(transfTriangle.toString());
+            myPanel.transf.transform(myPanel.transfTriangle);
+            myPanel.enableTransformationDrawing();
         } catch(Exception e){
             System.err.println("Not enough data to transform!");
         }
@@ -376,13 +375,13 @@ public class GUI extends javax.swing.JFrame {
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
-            triangle.setPoint(0, x, y);
+            myPanel.triangle.setPoint(0, x, y);
             x = Integer.parseInt(this.jFormattedTextField3.getText());
             y = Integer.parseInt(this.jFormattedTextField4.getText());
-            triangle.setPoint(1, x, y);
+            myPanel.triangle.setPoint(1, x, y);
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
-            triangle.setPoint(2, x, y);
+            myPanel.triangle.setPoint(2, x, y);
         } catch(Exception e){
             System.err.println("Not enough data to add triangle!");
         }
