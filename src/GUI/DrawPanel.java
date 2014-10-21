@@ -117,6 +117,13 @@ public class DrawPanel extends JPanel implements Runnable{
     }
     
     /**
+     * Disable drawing.
+     */
+    public void disableAnimation(){
+        this.animation = false;
+    }
+    
+    /**
      * Method draws X and Y axes on the JPanel.
      * @param g Graphics2D
      */

@@ -348,6 +348,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try{
+            // Parse input to make triangle.
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
@@ -361,7 +362,7 @@ public class GUI extends javax.swing.JFrame {
             y = Integer.parseInt(this.jFormattedTextField6.getText());
             myPanel.triangle.setPoint(2, x, y);
             myPanel.transfTriangle.setPoint(2, x, y);
-            
+            // Parse input to make transformation.
             float a,b,c,d,e,f;
             a = Float.parseFloat(this.jFormattedTextField7.getText());
             b = Float.parseFloat(this.jFormattedTextField8.getText());
@@ -405,6 +406,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try{
+            // Parse input to make triangle.
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
@@ -415,7 +417,7 @@ public class GUI extends javax.swing.JFrame {
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
             myPanel.triangle.setPoint(2, x, y);
-            
+            // Parse input to make transformation.
             float a,b,c,d,e,f;
             a = Float.parseFloat(this.jFormattedTextField7.getText());
             b = Float.parseFloat(this.jFormattedTextField8.getText());
@@ -434,6 +436,8 @@ public class GUI extends javax.swing.JFrame {
                                                         myPanel.stepAmount);
             myPanel.enableAnimationDrawing();
         } catch(Exception e){
+            // If something goes wrong we disable animation.
+            myPanel.disableAnimation();
             System.err.println("Not enough data to animate transformation!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
