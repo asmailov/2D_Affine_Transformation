@@ -31,7 +31,11 @@ import java.util.ArrayList;
  * @author Aleksandr Šmailov
  */
 public class AffineTransformation {
-    private static float a, b, c, d, e, f;
+    private float a, b, c, d, e, f;
+    
+    public AffineTransformation(){
+        init();
+    }
     
     public AffineTransformation(int a, int b, int c,
                                 int d, int e, int f){
@@ -64,10 +68,48 @@ public class AffineTransformation {
     }
     
     /**
+     * Set coefficients.
+     * @param a integer
+     * @param b integer
+     * @param c integer 
+     * @param d integer
+     * @param e integer
+     * @param f integer
+     */
+    public void setCoefficient(int a, int b, int c,
+                               int d, int e, int f){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.e = e;
+        this.f = f;
+    }
+    
+    /**
+     * Set coefficients.
+     * @param a float
+     * @param b float
+     * @param c float
+     * @param d float
+     * @param e float
+     * @param f float
+     */
+    public void setCoefficient(float a, float b, float c,
+                               float d, float e, float f){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.e = e;
+        this.f = f;
+    }
+	
+    /**
      * Transforms triangle using AffineTransformation.
      * @param t Triangle
      */
-    public static void transform(Triangle t){
+    public void transform(Triangle t){
         int x, y;
         Point p;
         for(int i = 0; i < 3; i++){

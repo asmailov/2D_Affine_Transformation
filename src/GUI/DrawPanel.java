@@ -41,12 +41,16 @@ import javax.swing.JPanel;
 public class DrawPanel extends JPanel implements Runnable{
     
     private final static PrintStream out = System.out;
+    
     private int x0, y0, width, height;
+    public Triangle triangle;
+    public ArrayList<Triangle> steps;
+    
     private static Thread animator;
     private int stepCount;
     private int stepAmount;
-    private ArrayList<Triangle> steps;
-    private Triangle triangle;
+    private boolean animation;
+    private boolean transformation;
     
     /**
      * DrawPanel constructor.
@@ -58,6 +62,7 @@ public class DrawPanel extends JPanel implements Runnable{
      * Initialize variables.
      */
     private void init(){
+        animation = false;
         stepCount = 0;
         this.width = this.getWidth();
         this.height = this.getHeight();
@@ -69,6 +74,20 @@ public class DrawPanel extends JPanel implements Runnable{
             animator = new Thread(this, "AffineTransformation animation");
             animator.start();
         }
+    }
+    
+    /**
+     * Make panel draw transformed triangle.
+     */
+    public void enableTransformationDrawing(){
+        this.transformation = true;
+    }
+    
+    /**
+     * Make panel draw animation.
+     */
+    public void enableAnimationDrawing(){
+        this.animation = true;
     }
     
     /**
@@ -127,16 +146,13 @@ public class DrawPanel extends JPanel implements Runnable{
         this.y0 = this.getHeight() - this.getHeight()/8;
         // Draw axes
         drawAxes(g2d);
-        Triangle t = new Triangle(10,0,100,20,50,100);
-        Triangle tmp = new Triangle(10,0,100,20,50,100);
-//        out.println(t.toString());
-        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
-        steps = f.getTransformationSteps(t,10);
-        stepAmount = 10;
-        //f.transform(t);
-//        out.println(t.toString());
-//        out.println("________________");
-        drawTriangle(g2d,triangle);
+//        Triangle t = new Triangle(10,0,100,20,50,100);
+//        Triangle tmp = new Triangle(10,0,100,20,50,100);
+//        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
+//        steps = f.getTransformationSteps(t,10);
+//        stepAmount = 10;
+        
+        //drawTriangle(g2d,triangle);
     }
     
     /**
@@ -166,13 +182,15 @@ public class DrawPanel extends JPanel implements Runnable{
         while(true){
             repaint();
             try {
-                if(stepCount < stepAmount){
-                    triangle = steps.get(stepCount);
-                    stepCount++;
-                } else {
-                    stepCount = 0;
+                if(animation){
+                    if(stepCount < stepAmount){
+                        triangle = steps.get(stepCount);
+                        stepCount++;
+                    } else {
+                        stepCount = 0;
+                    }
+                    Thread.sleep(250);
                 }
-                Thread.sleep(250);
             } catch (InterruptedException ex) {
                 out.println(ex);
             }

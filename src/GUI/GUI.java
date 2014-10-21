@@ -23,8 +23,8 @@
  */
 package GUI;
 
+import Main.AffineTransformation;
 import Main.Triangle;
-import static Main.AffineTransformation.transform;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
 
@@ -34,11 +34,15 @@ import javax.swing.text.NumberFormatter;
  */
 public class GUI extends javax.swing.JFrame {
     private Triangle triangle;
+    private Triangle transfTriangle;
+    private AffineTransformation transf;
     /**
      * Creates new form GUI
      */
     public GUI() {
         triangle = new Triangle();
+        transfTriangle = new Triangle();
+        transf = new AffineTransformation();
         initComponents();
     }
 
@@ -109,27 +113,51 @@ public class GUI extends javax.swing.JFrame {
             .addGap(0, 509, Short.MAX_VALUE)
         );
 
+        jFormattedTextField1.setText("10");
+
         jLabel1.setText("x1");
+
+        jFormattedTextField2.setText("0");
 
         jLabel2.setText("y1");
 
+        jFormattedTextField3.setText("100");
+
         jLabel3.setText("x2");
+
+        jFormattedTextField4.setText("20");
 
         jLabel4.setText("y2");
 
+        jFormattedTextField5.setText("50");
+
         jLabel5.setText("x3");
+
+        jFormattedTextField6.setText("100");
 
         jLabel6.setText("y3");
 
+        jFormattedTextField7.setText("3");
+
         jLabel7.setText("a");
+
+        jFormattedTextField8.setText("1");
 
         jLabel8.setText("b");
 
+        jFormattedTextField9.setText("1");
+
         jLabel9.setText("c");
+
+        jFormattedTextField10.setText("3");
 
         jLabel10.setText("d");
 
+        jFormattedTextField11.setText("0");
+
         jLabel11.setText("e");
+
+        jFormattedTextField12.setText("0");
 
         jLabel12.setText("f");
 
@@ -145,6 +173,11 @@ public class GUI extends javax.swing.JFrame {
         jButton3.setText("Animate");
 
         jButton1.setText("Add triangle");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Add transformation");
 
@@ -312,12 +345,15 @@ public class GUI extends javax.swing.JFrame {
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
             triangle.setPoint(0, x, y);
+            transfTriangle.setPoint(0, x, y);
             x = Integer.parseInt(this.jFormattedTextField3.getText());
             y = Integer.parseInt(this.jFormattedTextField4.getText());
             triangle.setPoint(1, x, y);
+            transfTriangle.setPoint(1, x, y);
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
             triangle.setPoint(2, x, y);
+            transfTriangle.setPoint(2, x, y);
             float a,b,c,d,e,f;
             a = Float.parseFloat(this.jFormattedTextField7.getText());
             b = Float.parseFloat(this.jFormattedTextField8.getText());
@@ -325,15 +361,32 @@ public class GUI extends javax.swing.JFrame {
             d = Float.parseFloat(this.jFormattedTextField10.getText());
             e = Float.parseFloat(this.jFormattedTextField11.getText());
             f = Float.parseFloat(this.jFormattedTextField12.getText());
+            transf.setCoefficient(a, b, c, d, e, f);
             System.out.println(triangle.toString());
-            transform(triangle);
-            System.out.println(triangle.toString());
+            transf.transform(transfTriangle);
+            
+            System.out.println(transfTriangle.toString());
         } catch(Exception e){
+            System.err.println("Not enough data to transform!");
         }
-//        if(!s.isEmpty()){
-//            int i = Integer.parseInt(s);
-        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try{
+            int x,y;
+            x = Integer.parseInt(this.jFormattedTextField1.getText());
+            y = Integer.parseInt(this.jFormattedTextField2.getText());
+            triangle.setPoint(0, x, y);
+            x = Integer.parseInt(this.jFormattedTextField3.getText());
+            y = Integer.parseInt(this.jFormattedTextField4.getText());
+            triangle.setPoint(1, x, y);
+            x = Integer.parseInt(this.jFormattedTextField5.getText());
+            y = Integer.parseInt(this.jFormattedTextField6.getText());
+            triangle.setPoint(2, x, y);
+        } catch(Exception e){
+            System.err.println("Not enough data to add triangle!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
