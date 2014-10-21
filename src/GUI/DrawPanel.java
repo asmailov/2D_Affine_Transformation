@@ -50,7 +50,8 @@ public class DrawPanel extends JPanel implements Runnable{
     
     private static Thread animator;
     private int stepCount;
-    private int stepAmount;
+    public int stepAmount;
+    public int speed;
     private boolean animation;
     private boolean transformation;
     private boolean drawTriangle;
@@ -74,12 +75,18 @@ public class DrawPanel extends JPanel implements Runnable{
         this.height = this.getHeight();
         this.x0 = this.getWidth()/8;
         this.y0 = this.getHeight() - this.getHeight()/8;
-        calculate();
         // Creating and starting new Thread so we can do animation.
         if (animator == null) {
             animator = new Thread(this, "AffineTransformation animation");
             animator.start();
         }
+    }
+    
+    /**
+     * Resets step count.
+     */
+    public void resetStepCount(){
+        this.stepCount = 0;
     }
     
     /**
@@ -163,28 +170,14 @@ public class DrawPanel extends JPanel implements Runnable{
         this.height = this.getHeight();
         this.x0 = this.getWidth()/8;
         this.y0 = this.getHeight() - this.getHeight()/8;
-        // Draw axes
+        // Draw axes.
         drawAxes(g2d);
-//        Triangle t = new Triangle(10,0,100,20,50,100);
-//        Triangle tmp = new Triangle(10,0,100,20,50,100);
-//        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
-//        steps = f.getTransformationSteps(t,10);
-//        stepAmount = 10;
+        // Draw triangle.
         if(drawTriangle || animation){
             drawTriangle(g2d,triangle);
         } else if(transformation){
             drawTriangle(g2d,transfTriangle);
         }
-    }
-    
-    /**
-     * REMOVE THIS
-     */
-    public void calculate(){
-        Triangle t = new Triangle(10,0,100,20,50,100);
-        AffineTransformation f = new AffineTransformation(3f, 1f, 1f, 3f, 0f, 0f);
-        steps = f.getTransformationSteps(t,10);
-        stepAmount = 10;
     }
     
     /**
@@ -211,7 +204,7 @@ public class DrawPanel extends JPanel implements Runnable{
                     } else {
                         stepCount = 0;
                     }
-                    Thread.sleep(250);
+                    Thread.sleep(10 + 500 - speed*50);
                 }
             } catch (InterruptedException ex) {
                 out.println(ex);
