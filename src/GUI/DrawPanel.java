@@ -75,10 +75,6 @@ public class DrawPanel extends JPanel implements Runnable{
         animation = false;
         stepCount = 0;
         start = 0;
-        this.width = this.getWidth();
-        this.height = this.getHeight();
-        this.x0 = this.getWidth()/8;
-        this.y0 = this.getHeight() - this.getHeight()/8;
         // Creating and starting new Thread so we can do animation.
         if (animator == null) {
             animator = new Thread(this, "AffineTransformation animation");
@@ -209,7 +205,9 @@ public class DrawPanel extends JPanel implements Runnable{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Calculating correct starting point.
         calcStartingPoint();
+        // Do drawing.
         doDrawing(g);
     }
     
@@ -219,7 +217,6 @@ public class DrawPanel extends JPanel implements Runnable{
     @Override
     public void run() {
         while(true){
-            
             repaint();
             try {
                 if(animation){
@@ -232,7 +229,7 @@ public class DrawPanel extends JPanel implements Runnable{
                     Thread.sleep(10 + 500 - speed*50);
                 }
             } catch (InterruptedException ex) {
-                out.println(ex);
+                ex.printStackTrace(System.err);
             }
         }
     }

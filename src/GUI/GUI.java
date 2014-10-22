@@ -23,8 +23,6 @@
  */
 package GUI;
 
-import Main.AffineTransformation;
-import Main.Triangle;
 import java.text.NumberFormat;
 import javax.swing.JSlider;
 import javax.swing.text.NumberFormatter;
@@ -391,6 +389,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
+            // Parse input to make triangle.
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
@@ -456,15 +455,20 @@ public class GUI extends javax.swing.JFrame {
         int x,y;
         x = evt.getX();
         y = evt.getY();
+        // Calculate difference.
         int xChange = x - myPanel.x;
         int yChange = y - myPanel.y;
+        // Change starting point of X and Y axes, which in turn changes
+        // Triangle and Animation positions.
         myPanel.x0 = myPanel.x0 + xChange;
         myPanel.y0 = myPanel.y0 + yChange;
+        // Save x, y so we know from where to calculate next difference.
         myPanel.x = evt.getX();
         myPanel.y = evt.getY();
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        // Save x, y so we can calculate difference later on.
         myPanel.x = evt.getX();
         myPanel.y = evt.getY();
     }//GEN-LAST:event_jPanel1MousePressed
