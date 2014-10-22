@@ -122,10 +122,11 @@ public class AffineTransformation {
     
     /**
      * Returns ArrayList of triangles which represent every step of
-     * transformation.
+     * transformation by dividing difference of starting and transformed 
+     * triangle coordinates by the amount of steps.
      * @param t Triangle.
      * @param steps how many steps is required.
-     * @return ArrayList of Triangle.
+     * @return ArrayList of Triangles.
      */
     public ArrayList<Triangle> getTransformationSteps(Triangle t, int steps){
         ArrayList<Triangle> triangles = new ArrayList();
@@ -150,6 +151,44 @@ public class AffineTransformation {
                     }
                     triangles.add(new Triangle(p[0],p[1],p[2]));
                 }
+            } else {
+                System.err.println("Steps amount is 0 or lower!");
+            }
+        } else {
+            System.err.println("null Triangle!");
+        }
+        return triangles;
+    }
+    
+    /**
+     * Returns ArrayList of triangles which represent every step of
+     * transformation by dividing coefficients by the amount of steps.
+     * @param t Triangle.
+     * @param steps how many steps is required.
+     * @return ArrayList of Triangles.
+     */
+    public ArrayList<Triangle> getTransformationSteps2(Triangle t, int steps){
+        ArrayList<Triangle> triangles = new ArrayList();
+        if(t != null){
+            if (steps > 0) {
+                float a,b,c,d,e,f;
+                for(int i = 1; i <= steps; i++){
+                    Triangle tr = t.getCopy();
+                    a = this.a / steps * i;
+                    b = this.b / steps * i;
+                    c = this.c / steps * i;
+                    d = this.d / steps * i;
+                    e = this.e / steps * i;
+                    f = this.f / steps * i;
+                    AffineTransformation transf = new AffineTransformation(a, b,
+                                                                           c, d,
+                                                                           e, f
+                                                                           );
+                    transf.transform(tr);
+                    triangles.add(tr);
+                }
+                
+                
             } else {
                 System.err.println("Steps amount is 0 or lower!");
             }
