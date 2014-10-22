@@ -100,6 +100,16 @@ public class GUI extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -441,6 +451,23 @@ public class GUI extends javax.swing.JFrame {
             System.err.println("Not enough data to animate transformation!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        int x,y;
+        x = evt.getX();
+        y = evt.getY();
+        int xChange = x - myPanel.x;
+        int yChange = y - myPanel.y;
+        myPanel.x0 = myPanel.x0 + xChange;
+        myPanel.y0 = myPanel.y0 + yChange;
+        myPanel.x = evt.getX();
+        myPanel.y = evt.getY();
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        myPanel.x = evt.getX();
+        myPanel.y = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
 
     /**
      * @param args the command line arguments

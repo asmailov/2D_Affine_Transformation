@@ -42,11 +42,13 @@ public class DrawPanel extends JPanel implements Runnable{
     
     private final static PrintStream out = System.out;
     
-    private int x0, y0, width, height;
+    private int width, height;
+    public int x0, y0;
     public Triangle triangle;
     public Triangle transfTriangle;
     public AffineTransformation transf;
     public ArrayList<Triangle> steps;
+    public int x, y;
     
     private static Thread animator;
     private int stepCount;
@@ -55,6 +57,7 @@ public class DrawPanel extends JPanel implements Runnable{
     private boolean animation;
     private boolean transformation;
     private boolean drawTriangle;
+    private int start;
     
     /**
      * DrawPanel constructor.
@@ -71,6 +74,7 @@ public class DrawPanel extends JPanel implements Runnable{
         transf = new AffineTransformation();
         animation = false;
         stepCount = 0;
+        start = 0;
         this.width = this.getWidth();
         this.height = this.getHeight();
         this.x0 = this.getWidth()/8;
@@ -129,7 +133,9 @@ public class DrawPanel extends JPanel implements Runnable{
      */
     private void drawAxes(Graphics2D g){
         // Draw axes.
+        // X axis.
         g.drawLine(0, y0, width, y0);
+        // Y axis.
         g.drawLine(x0, 0, x0, height);
         // Diameter of Axes centre.
         int diameter;
@@ -172,11 +178,6 @@ public class DrawPanel extends JPanel implements Runnable{
         // Enable antialias
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                              RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        this.width = this.getWidth();
-        this.height = this.getHeight();
-        this.x0 = this.getWidth()/8;
-        this.y0 = this.getHeight() - this.getHeight()/8;
         // Draw axes.
         drawAxes(g2d);
         // Draw triangle.
@@ -188,11 +189,27 @@ public class DrawPanel extends JPanel implements Runnable{
     }
     
     /**
+     * Calculates starting point of X and Y axes.
+     */
+    public void calcStartingPoint(){
+        if (start == 0){
+            this.width = this.getWidth();
+            this.height = this.getHeight();
+            this.x0 = this.getWidth()/8;
+            this.y0 = this.getHeight() - this.getHeight()/8;
+        }
+        if (start <= 1){
+            start++;
+        }
+    }
+    
+    /**
      * Overriding this so we can draw our own Graphic.
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        calcStartingPoint();
         doDrawing(g);
     }
     
@@ -202,6 +219,7 @@ public class DrawPanel extends JPanel implements Runnable{
     @Override
     public void run() {
         while(true){
+            
             repaint();
             try {
                 if(animation){
