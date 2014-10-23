@@ -125,6 +125,8 @@ public class DrawPanel extends JPanel implements Runnable{
      * @param g Graphics2D
      */
     private void drawAxes(Graphics2D g){
+        this.width = this.getWidth();
+        this.height = this.getHeight();
         // Draw axes.
         // X axis.
         g.drawLine(0, y0, width, y0);
