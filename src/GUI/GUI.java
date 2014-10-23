@@ -32,15 +32,15 @@ import javax.swing.text.NumberFormatter;
  * @author Aleksandr Šmailov
  */
 public class GUI extends javax.swing.JFrame {
-//    private Triangle triangle;
-//    private Triangle transfTriangle;
-//    private AffineTransformation transf;
-    private DrawPanel myPanel;
+    // myPanel allows us to control the jPanel we created.
+    private final DrawPanel myPanel;
     /**
      * Creates new form GUI
      */
     public GUI() {
         initComponents();
+        // Convert jPanel to DrawPanel and assign pointer to our panel
+        // which will act like a window through which we can control jPanel.
         myPanel = (DrawPanel)jPanel1;
     }
 
@@ -360,16 +360,16 @@ public class GUI extends javax.swing.JFrame {
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
-            myPanel.triangle.setPoint(0, x, y);
-            myPanel.transfTriangle.setPoint(0, x, y);
+            myPanel.getTriangle().setPoint(0, x, y);
+            myPanel.getTransfTriangle().setPoint(0, x, y);
             x = Integer.parseInt(this.jFormattedTextField3.getText());
             y = Integer.parseInt(this.jFormattedTextField4.getText());
-            myPanel.triangle.setPoint(1, x, y);
-            myPanel.transfTriangle.setPoint(1, x, y);
+            myPanel.getTriangle().setPoint(1, x, y);
+            myPanel.getTransfTriangle().setPoint(1, x, y);
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
-            myPanel.triangle.setPoint(2, x, y);
-            myPanel.transfTriangle.setPoint(2, x, y);
+            myPanel.getTriangle().setPoint(2, x, y);
+            myPanel.getTransfTriangle().setPoint(2, x, y);
             // Parse input to make transformation.
             float a,b,c,d,e,f;
             a = Float.parseFloat(this.jFormattedTextField7.getText());
@@ -378,9 +378,9 @@ public class GUI extends javax.swing.JFrame {
             d = Float.parseFloat(this.jFormattedTextField10.getText());
             e = Float.parseFloat(this.jFormattedTextField11.getText());
             f = Float.parseFloat(this.jFormattedTextField12.getText());
-            myPanel.transf.setCoefficient(a, b, c, d, e, f);
+            myPanel.getTransf().setCoefficient(a, b, c, d, e, f);
             
-            myPanel.transf.transform(myPanel.transfTriangle);
+            myPanel.getTransf().transform(myPanel.getTransfTriangle());
             myPanel.enableTransformationDrawing();
         } catch(Exception e){
             System.err.println("Not enough data to transform!");
@@ -393,13 +393,13 @@ public class GUI extends javax.swing.JFrame {
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
-            myPanel.triangle.setPoint(0, x, y);
+            myPanel.getTriangle().setPoint(0, x, y);
             x = Integer.parseInt(this.jFormattedTextField3.getText());
             y = Integer.parseInt(this.jFormattedTextField4.getText());
-            myPanel.triangle.setPoint(1, x, y);
+            myPanel.getTriangle().setPoint(1, x, y);
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
-            myPanel.triangle.setPoint(2, x, y);
+            myPanel.getTriangle().setPoint(2, x, y);
             myPanel.enableTriangleDrawing();
         } catch(Exception e){
             System.err.println("Not enough data to add triangle!");
@@ -409,7 +409,7 @@ public class GUI extends javax.swing.JFrame {
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
         JSlider source = (JSlider) evt.getSource();
         if (!source.getValueIsAdjusting()) {
-            myPanel.speed = source.getValue();
+            myPanel.setSpeed(source.getValue());
         }
     }//GEN-LAST:event_jSlider1StateChanged
 
@@ -419,13 +419,13 @@ public class GUI extends javax.swing.JFrame {
             int x,y;
             x = Integer.parseInt(this.jFormattedTextField1.getText());
             y = Integer.parseInt(this.jFormattedTextField2.getText());
-            myPanel.triangle.setPoint(0, x, y);
+            myPanel.getTriangle().setPoint(0, x, y);
             x = Integer.parseInt(this.jFormattedTextField3.getText());
             y = Integer.parseInt(this.jFormattedTextField4.getText());
-            myPanel.triangle.setPoint(1, x, y);
+            myPanel.getTriangle().setPoint(1, x, y);
             x = Integer.parseInt(this.jFormattedTextField5.getText());
             y = Integer.parseInt(this.jFormattedTextField6.getText());
-            myPanel.triangle.setPoint(2, x, y);
+            myPanel.getTriangle().setPoint(2, x, y);
             // Parse input to make transformation.
             float a,b,c,d,e,f;
             a = Float.parseFloat(this.jFormattedTextField7.getText());
@@ -434,15 +434,16 @@ public class GUI extends javax.swing.JFrame {
             d = Float.parseFloat(this.jFormattedTextField10.getText());
             e = Float.parseFloat(this.jFormattedTextField11.getText());
             f = Float.parseFloat(this.jFormattedTextField12.getText());
-            myPanel.transf.setCoefficient(a, b, c, d, e, f);
+            myPanel.getTransf().setCoefficient(a, b, c, d, e, f);
             int steps;
             steps = Integer.parseInt(this.jFormattedTextField13.getText());
-            myPanel.stepAmount = steps;
+            myPanel.setStepAmount(steps);
             myPanel.resetStepCount();
-            myPanel.speed = jSlider1.getValue();
-            myPanel.steps = myPanel.transf.getTransformationSteps(
-                                                        myPanel.triangle,
-                                                        myPanel.stepAmount);
+            myPanel.setSpeed(jSlider1.getValue());
+            myPanel.setSteps(myPanel.getTransf().getTransformationSteps(
+                                    myPanel.getTriangle(),
+                                    myPanel.getStepAmount())
+                            );
             myPanel.enableAnimationDrawing();
         } catch(Exception e){
             // If something goes wrong we disable animation.
@@ -456,21 +457,21 @@ public class GUI extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
         // Calculate difference.
-        int xChange = x - myPanel.x;
-        int yChange = y - myPanel.y;
+        int xDiff = x - myPanel.getxDrag();
+        int yDiff = y - myPanel.getyDrag();
         // Change starting point of X and Y axes, which in turn changes
         // Triangle and Animation positions.
-        myPanel.x0 = myPanel.x0 + xChange;
-        myPanel.y0 = myPanel.y0 + yChange;
+        myPanel.setX0(myPanel.getX0() + xDiff);
+        myPanel.setY0(myPanel.getY0() + yDiff);
         // Save x, y so we know from where to calculate next difference.
-        myPanel.x = evt.getX();
-        myPanel.y = evt.getY();
+        myPanel.setxDiff(x);
+        myPanel.setyDiff(y);
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         // Save x, y so we can calculate difference later on.
-        myPanel.x = evt.getX();
-        myPanel.y = evt.getY();
+        myPanel.setxDiff(evt.getX());
+        myPanel.setyDiff(evt.getY());
     }//GEN-LAST:event_jPanel1MousePressed
 
     /**

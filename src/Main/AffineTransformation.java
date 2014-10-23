@@ -129,7 +129,7 @@ public class AffineTransformation {
      * @return ArrayList of Triangles.
      */
     public ArrayList<Triangle> getTransformationSteps(Triangle t, int steps){
-        ArrayList<Triangle> triangles = new ArrayList();
+        ArrayList<Triangle> triangles = new ArrayList<>();
         if(t != null){
             if (steps > 0) {
                 Triangle oldt = t.getCopy();
@@ -168,7 +168,7 @@ public class AffineTransformation {
      * @return ArrayList of Triangles.
      */
     public ArrayList<Triangle> getTransformationSteps2(Triangle t, int steps){
-        ArrayList<Triangle> triangles = new ArrayList();
+        ArrayList<Triangle> triangles = new ArrayList<>();
         if(t != null){
             if (steps > 0) {
                 float a,b,c,d,e,f;

@@ -40,20 +40,18 @@ import javax.swing.JPanel;
  */
 public class DrawPanel extends JPanel implements Runnable{
     
-    private final static PrintStream out = System.out;
-    
     private int width, height;
-    public int x0, y0;
-    public Triangle triangle;
-    public Triangle transfTriangle;
-    public AffineTransformation transf;
-    public ArrayList<Triangle> steps;
-    public int x, y;
+    private int x0,y0;
+    private Triangle triangle;
+    private Triangle transfTriangle;
+    private AffineTransformation transf;
+    private ArrayList<Triangle> steps;
+    private int xDrag, yDrag;
     
     private static Thread animator;
     private int stepCount;
-    public int stepAmount;
-    public int speed;
+    private int stepAmount;
+    private int speed;
     private boolean animation;
     private boolean transformation;
     private boolean drawTriangle;
@@ -232,5 +230,155 @@ public class DrawPanel extends JPanel implements Runnable{
                 ex.printStackTrace(System.err);
             }
         }
+    }
+    
+    // Setters and getters.
+    
+    /**
+     * @return initial triangle which is added by the user.
+     */
+    public Triangle getTriangle() {
+        return triangle;
+    }
+
+    /**
+     * @param triangle initial triangle.
+     */
+    public void setTriangle(Triangle triangle) {
+        this.triangle = triangle;
+    }
+
+    /**
+     * @return transformed triangle.
+     */
+    public Triangle getTransfTriangle() {
+        return transfTriangle;
+    }
+
+    /**
+     * @param transfTriangle transformed triangle.
+     */
+    public void setTransfTriangle(Triangle transfTriangle) {
+        this.transfTriangle = transfTriangle;
+    }
+
+    /**
+     * @return affine transformation.
+     */
+    public AffineTransformation getTransf() {
+        return transf;
+    }
+
+    /**
+     * @param transf affine transformation.
+     */
+    public void setTransf(AffineTransformation transf) {
+        this.transf = transf;
+    }
+
+    /**
+     * @return x0 coordinate on JPanel representing origin point of X and Y
+     * intersection.
+     */
+    public int getX0() {
+        return x0;
+    }
+
+    /**
+     * @param x0 x0 coordinate on JPanel representing origin point of X and Y
+     * intersection.
+     */
+    public void setX0(int x0) {
+        this.x0 = x0;
+    }
+
+    /**
+     * @return y0 coordinate on JPanel representing origin point of X and Y
+     * intersection.
+     */
+    public int getY0() {
+        return y0;
+    }
+
+    /**
+     * @param y0 y0 coordinate on JPanel representing origin point of X and Y
+     * intersection.
+     */
+    public void setY0(int y0) {
+        this.y0 = y0;
+    }
+
+    /**
+     * @return array of triangles which represent each step of transformation.
+     */
+    public ArrayList<Triangle> getSteps() {
+        return steps;
+    }
+
+    /**
+     * @param steps set the array of triangles which represent each step of
+     * transformation.
+     */
+    public void setSteps(ArrayList<Triangle> steps) {
+        this.steps = steps;
+    }
+
+    /**
+     * @return amount of steps which are required to animate a transformation.
+     */
+    public int getStepAmount() {
+        return stepAmount;
+    }
+
+    /**
+     * @param stepAmount amount of steps which are required to animate a 
+     * transformation.
+     */
+    public void setStepAmount(int stepAmount) {
+        this.stepAmount = stepAmount;
+    }
+
+    /**
+     * @return speed of animation.
+     */
+    public int getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed speed of animation.
+     */
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * @return x coordinate of previous mouse location(one tick from current).
+     */
+    public int getxDrag() {
+        return xDrag;
+    }
+
+    /**
+     * @param xDiff x coordinate of previous mouse location(one tick 
+     * from current).
+     */
+    public void setxDiff(int xDiff) {
+        this.xDrag = xDiff;
+    }
+
+    /**
+     * @return y coordinate of previous mouse location(one tick from current).
+     */
+    public int getyDrag() {
+        return yDrag;
+    }
+
+    /**
+     * @param yDiff y coordinate of previous mouse location(one tick 
+     * from current).
+     */
+    public void setyDiff(int yDiff) {
+        this.yDrag = yDiff;
     }
 }
