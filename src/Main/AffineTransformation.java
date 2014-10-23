@@ -161,6 +161,9 @@ public class AffineTransformation {
     }
     
     /**
+     * ATTENTION!
+     * THIS METHOD OF GETTING STEPS IS PROBABLY BAD.
+     * 
      * Returns ArrayList of triangles which represent every step of
      * transformation by dividing coefficients by the amount of steps.
      * @param t Triangle.
