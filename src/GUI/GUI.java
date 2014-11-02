@@ -457,8 +457,8 @@ public class GUI extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
         // Calculate difference.
-        int xDiff = x - myPanel.getxDrag();
-        int yDiff = y - myPanel.getyDrag();
+        int xDiff = x - myPanel.getxDiff();
+        int yDiff = y - myPanel.getyDiff();
         // Change starting point of X and Y axes, which in turn changes
         // Triangle and Animation positions.
         myPanel.setX0(myPanel.getX0() + xDiff);

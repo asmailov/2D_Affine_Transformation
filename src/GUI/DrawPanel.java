@@ -45,7 +45,7 @@ public class DrawPanel extends JPanel implements Runnable{
     private Triangle transfTriangle;
     private AffineTransformation transf;
     private ArrayList<Triangle> steps;
-    private int xDrag, yDrag;
+    private int xDiff, yDiff;
     
     private static Thread animator;
     private int stepCount;
@@ -356,8 +356,8 @@ public class DrawPanel extends JPanel implements Runnable{
     /**
      * @return x coordinate of previous mouse location(one tick from current).
      */
-    public int getxDrag() {
-        return xDrag;
+    public int getxDiff() {
+        return xDiff;
     }
 
     /**
@@ -365,14 +365,14 @@ public class DrawPanel extends JPanel implements Runnable{
      * from current).
      */
     public void setxDiff(int xDiff) {
-        this.xDrag = xDiff;
+        this.xDiff = xDiff;
     }
 
     /**
      * @return y coordinate of previous mouse location(one tick from current).
      */
-    public int getyDrag() {
-        return yDrag;
+    public int getyDiff() {
+        return yDiff;
     }
 
     /**
@@ -380,6 +380,6 @@ public class DrawPanel extends JPanel implements Runnable{
      * from current).
      */
     public void setyDiff(int yDiff) {
-        this.yDrag = yDiff;
+        this.yDiff = yDiff;
     }
 }
